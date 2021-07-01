@@ -8,11 +8,14 @@ router.get('/', (req, res) => {
   Product.findAll(
     {
       include: {
-        model: Category, Tag
+        model: Category
+      },
+      include: {
+        model: Tag
       }
     }
   )
-    .then(data = res.json(data))
+    .then(data => res.json(data))
   // find all products
   // be sure to include its associated Category and Tag data
 });
@@ -24,10 +27,13 @@ router.get('/:id', (req, res) => {
       id: req.params.id
     },
     include: {
-      model: Category, Tag
+      model: Category
+    },
+    include: {
+      model: Tag
     }
   })
-    .then(data => res.json())
+    .then(data => res.json(data))
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
@@ -53,8 +59,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  });
-  
+
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
